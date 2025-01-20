@@ -1,0 +1,159 @@
+To-Do List
+
+Affichage:index.html
+	Header:
+		Link: Inscription.html
+	Body:
+		Form:
+			Input: email (required)
+
+			Input: mot de passe (required)
+Metier:
+	Login(mail, mdp)
+		On success: Redirect to dashboard.html.
+		On failure: Redirect to index.html.
+Donnees:
+	user(id, email, mdp, nom)
+
+
+	-------------------------------------------------
+
+
+Affichage:inscription.html
+	Header:
+		Link: index.html
+	Body:
+	Form:
+		Input: nom (required)
+		Input: email (required)
+		Input: mot de passe (required)
+		Input: confirmer mot de passe (required)
+Metier:
+	Inscription(nom, email, mdp, confMdp)
+		If confMdp == mdp: Redirect to dashboard.html.
+		Else: Redirect to inscription.html.
+Donnees:
+	user(id, email, mdp, nom)
+
+
+	----------------------------------------------------
+
+
+Affichage:dashboard.html
+	Header:
+		Links: proprietes.html, litiges.html, licences.html, se-deconnecter.html
+	Body:
+		Overview of key metrics:
+		Number of IP rights.
+		Upcoming deadlines.
+		Financial summary.
+Metier:
+	Fetch data for metrics display:
+	getTotalIPRights(idUser)
+	getUpcomingDeadlines(idUser)
+	getFinancialSummary(idUser)
+Donnees:
+	ip_rights(id, type, numero, dateDepot, dateExpiration, territoire)
+	deadlines(id, idIPRight, date, type)
+	user(id, email, mdp, nom)
+
+
+	-----------------------------------------------------
+
+
+Affichage:proprietes.html
+	Header:
+		Links: dashboard.html, litiges.html, licences.html, se-deconnecter.html
+	Body:
+		Form:
+			Input: Rechercher propriété intellectuelle
+		List:
+			For each property:
+				Display:
+					type (patent, trademark, etc.)
+					numero d’enregistrement
+					territoire
+		Buttons:
+			Modifier
+			Supprimer
+		Button: Ajouter une propriété
+Metier:
+	getIPRights(idUser)
+	addIPRight(data)
+	updateIPRight(id, data)
+	deleteIPRight(id)
+Donnees:
+	ip_rights(id, type, numero, dateDepot, dateExpiration, territoire)
+
+
+	--------------------------------------------------------------
+
+
+Affichage:litiges.html
+	Header:
+		Links: dashboard.html, proprietes.html, licences.html, se-deconnecter.html
+	Body:
+		Form:
+			Input: Rechercher un litige
+		List:
+			For each dispute:
+				Display:
+					ip_right_id
+					description
+					resultat
+		Buttons:
+			Modifier
+			Supprimer
+		Button: Ajouter un litige
+Metier:
+	getDisputes(idUser)
+	addDispute(data)
+	updateDispute(id, data)
+	deleteDispute(id)
+Donnees:
+	litiges(id, idIPRight, description, resultat)
+
+
+	---------------------------------------------------------------
+
+
+Affichage:licences.html
+	Header:
+		Links: dashboard.html, proprietes.html, litiges.html, se-deconnecter.html
+	Body:
+		Form:
+			Input: Rechercher une licence
+		List:
+			For each license:
+				Display:
+					licencie
+					territoire
+					royalties
+	Buttons:
+		Modifier
+		Supprimer
+	Button: Ajouter une licence
+Metier:
+	getLicenses(idUser)
+	addLicense(data)
+	updateLicense(id, data)
+	deleteLicense(id)
+Donnees:
+	licences(id, idUser, licencie, territoire, royalties)
+
+
+	-------------------------------------------------------
+
+
+Affichage:notifications.html (Bonus)
+	Header:
+		Links: dashboard.html, proprietes.html, litiges.html, licences.html, se-deconnecter.html
+	Body:
+		List:
+			Display notifications for:
+				Deadlines approaching.
+				New disputes.		
+Metier:
+	getNotifications(idUser)
+Donnees:
+	notifications(id, idUser, message, date)
