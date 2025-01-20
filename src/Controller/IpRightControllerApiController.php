@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 
 final class IpRightControllerApiController extends AbstractController{
     
-    #[Route('api/ip/rights',methods:"POST")]
+    #[Route('api/ip/rights',methods:['POST'])]
     public function create(EntityManagerInterface $entityManager,#[MapRequestPayload(serializationContext : [
         'groups' => ['ipRight.create']
     ])] IpRight $ipRight){
