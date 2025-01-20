@@ -18,6 +18,8 @@ RUN composer require jms/serializer
 
 RUN composer require symfony/serializer
 
+RUN composer require api
+
 # Set working directory
 WORKDIR /app
 
