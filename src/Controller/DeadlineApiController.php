@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
 final class DeadlineApiController extends AbstractController{
-    #[Route('/api/deadlines', methods:['POST'])]
+    #[Route('/api/deadlines', methods:"POST")]
     public function create(EntityManagerInterface $em,#[MapRequestPayload(serializationContext:[
         'groups'=>['deadlines.create']
     ])] Deadlines $deadlines){
