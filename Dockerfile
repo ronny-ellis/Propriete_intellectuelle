@@ -21,3 +21,12 @@ RUN mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx
 
 # Install dependencies
 RUN composer install --ignore-platform-reqs
+
+# Set the port Symfony will use
+ENV PORT=8000
+
+# Expose the application's port
+EXPOSE 8000
+
+# Start the Symfony server
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
