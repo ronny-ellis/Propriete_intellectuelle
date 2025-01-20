@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
 final class UserControllerApiController extends AbstractController{
-    #[Route('/api/users', methods:'POST')]
+    #[Route('/api/users', methods:['POST'])]
     public function create(EntityManagerInterface $em,#[MapRequestPayload(serializationContext:[
         'groups'=>['users.create']
     ])] User $user){
