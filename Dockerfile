@@ -30,7 +30,7 @@ COPY . /app/.
 RUN mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx
 
 # Install dependencies
-RUN composer install --ignore-platform-reqs
+#RUN composer install --ignore-platform-reqs
 
 # Set the port Symfony will use
 ENV PORT=8000
