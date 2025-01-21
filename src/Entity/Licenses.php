@@ -16,7 +16,7 @@ class Licenses
     #[Groups(['licenses.show'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'licenses',cascade:'persist')]
+    #[ORM\ManyToOne(inversedBy: 'licenses',cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['licenses.show','licenses.create'])]
     private ?User $idUser = null;
