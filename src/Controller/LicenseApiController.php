@@ -60,8 +60,11 @@ final class LicenseApiController extends AbstractController
     }
     #[Route('/api/licenses/{id}',methods:['GET'],requirements:['id'=>Requirement::DIGITS])]
     public function findById(Licenses $licenses){
-        return $this->json($licenses,200,[
-            'groups'=>['licenses.show']
-        ]);
+        return $this->json([
+            'id' => $licenses->getId(),
+            'territoire' => $licenses->getTerritoire(),
+            'royalties' => $licenses->getRoyalties(),
+            'licenci' => $licenses->getRoyalties(),
+        ], 200);
     }
 }
