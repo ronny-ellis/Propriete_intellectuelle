@@ -37,19 +37,14 @@ final class UserControllerApiController extends AbstractController{
         if(!$user || $user->getMdp() != $data["mdp"]){
             return new JsonResponse(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
         }
-
-        $user = $serializer->deserialize(
-            $request->getContent(),
-            User::class,
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $user,  'groups' => ['user.log']]
-        );
-
         // $em->persist($user);
         // $em->flush();
-        return $this->json($user,200,[
-            'groups'=>['users.log']
-        ]);
+        return $this->json([
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'name' => $user->getNom(),
+        ], 200);
+        
     }
 
     #[Route('/api/users', methods:['GET'])]
