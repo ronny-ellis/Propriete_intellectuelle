@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use ApiPlatform\OpenApi\Model\License;
 use App\Entity\Licenses;
 use App\Entity\User;
 use App\Repository\LicensesRepository;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Validator\Constraints\Length;
 
 final class LicenseApiController extends AbstractController{
     #[Route('/api/licenses/{id}', methods:['POST'])]
@@ -34,11 +36,9 @@ final class LicenseApiController extends AbstractController{
     public function findAll(LicensesRepository $repository){
         $licenses=$repository->findAll();
 
-        $licensesDTO = array_map(function ($license){
-            return new LicensesDTO($license);
-        }, $licenses);
-
-        return $this->json($licensesDTO,200);
+        return $this->json($licenses,200, [
+            'groups' => 'licenses.show',
+        ]);
     }
     #[Route('/api/licenses/{id}',methods:['GET'],requirements:['id'=>Requirement::DIGITS])]
     public function findById(Licenses $licenses){
