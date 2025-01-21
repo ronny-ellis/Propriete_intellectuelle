@@ -43,8 +43,7 @@ final class UserControllerApiController extends AbstractController{
             'id' => $user->getId(),
             'email' => $user->getEmail(),
             'name' => $user->getNom(),
-        ], 200);
-        
+        ], 200);        
     }
 
     #[Route('/api/users', methods:['GET'])]
@@ -57,8 +56,10 @@ final class UserControllerApiController extends AbstractController{
 
     #[Route('/api/users/{id}', methods:['GET'], requirements:['id'=>Requirement::DIGITS])]
     public function findById(User $user){
-        return $this->json($user,200,[
-            'groups'=>['users.show']
-        ]);
+        return $this->json([
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'name' => $user->getNom(),
+        ], 200);
     }
 }

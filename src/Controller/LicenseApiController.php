@@ -43,9 +43,12 @@ final class LicenseApiController extends AbstractController
         $em->flush();
     
         // Return the created License
-        return $this->json($licenses, 201, [
-            'groups' => ['licenses.show'],
-        ]);
+        return $this->json([
+            'id' => $licenses->getId(),
+            'territoire' => $licenses->getTerritoire(),
+            'royalties' => $licenses->getRoyalties(),
+            'licencie' => $licenses->getRoyalties(),
+        ], 200);
     }
     
     
