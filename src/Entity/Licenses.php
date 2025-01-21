@@ -29,6 +29,10 @@ class Licenses
     #[Groups(['licenses.show','licenses.create'])]
     private ?string $royalties = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['licenses.show','licenses.create'])]
+    private ?string $licencie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +70,18 @@ class Licenses
     public function setRoyalties(string $royalties): static
     {
         $this->royalties = $royalties;
+
+        return $this;
+    }
+
+    public function getLicencie(): ?string
+    {
+        return $this->licencie;
+    }
+
+    public function setLicencie(string $licencie): static
+    {
+        $this->licencie = $licencie;
 
         return $this;
     }
