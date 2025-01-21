@@ -47,7 +47,7 @@ final class LicenseApiController extends AbstractController
             'id' => $licenses->getId(),
             'territoire' => $licenses->getTerritoire(),
             'royalties' => $licenses->getRoyalties(),
-            'licencie' => $licenses->getRoyalties(),
+            'licenci' => $licenses->getRoyalties(),
         ], 200);
     }
     
@@ -56,9 +56,7 @@ final class LicenseApiController extends AbstractController
     public function findAll(LicensesRepository $repository){
         $licenses=$repository->findAll();
         // TY le tsy mande
-        return $this->json($licenses,200, [
-            'groups' => 'licenses.show',
-        ]);
+        return $this->json($licenses,200);
     }
     #[Route('/api/licenses/{id}',methods:['GET'],requirements:['id'=>Requirement::DIGITS])]
     public function findById(Licenses $licenses){
