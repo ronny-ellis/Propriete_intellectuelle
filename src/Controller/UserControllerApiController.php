@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
@@ -20,6 +22,22 @@ final class UserControllerApiController extends AbstractController{
     ])] User $user){
         $em->persist($user);
         $em->flush();
+        return $this->json($user,200,[
+            'groups'=>['users.show']
+        ]);
+    }
+
+    #[Route('/api/users/login', methods:['POST'])]
+    public function login(EntityManagerInterface $em, Request $request, UserRepository $repository){    
+        $data = json_decode($request->getContent(), true);
+        
+        $user = $repository->findOneBy(['email' => $data['mail']]);
+        if(!$user || $user->getMdp() != $data["mdp"]){
+            return new JsonResponse(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // $em->persist($user);
+        // $em->flush();
         return $this->json($user,200,[
             'groups'=>['users.show']
         ]);

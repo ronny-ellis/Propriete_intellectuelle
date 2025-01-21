@@ -18,11 +18,11 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users.show','users.create'])]
+    #[Groups(['users.show','users.create','users.log'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users.show','users.create'])]
+    #[Groups(['users.show','users.create', 'users.log'])]
     private ?string $mdp = null;
 
     #[ORM\Column(length: 255)]
