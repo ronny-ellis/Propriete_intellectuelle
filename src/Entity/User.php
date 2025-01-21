@@ -14,7 +14,7 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['users.show'])]
+    #[Groups(['users.show','users.log'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -26,7 +26,7 @@ class User
     private ?string $mdp = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users.show','users.create'])]
+    #[Groups(['users.show','users.create','users.log'])]
     private ?string $nom = null;
 
     /**
