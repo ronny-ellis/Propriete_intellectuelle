@@ -18,19 +18,19 @@ class Licenses
 
     #[ORM\ManyToOne(inversedBy: 'licenses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['licenses.show','licenses.create'])]
+    #[Groups(['licenses.get'])]
     private ?User $idUser = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['licenses.show','licenses.create'])]
+    #[Groups(['licenses.show','licenses.create','licenses.get'])]
     private ?string $territoire = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    #[Groups(['licenses.show','licenses.create'])]
+    #[Groups(['licenses.show','licenses.create','licenses.get'])]
     private ?string $royalties = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['licenses.show','licenses.create'])]
+    #[Groups(['licenses.show','licenses.create','licenses.get'])]
     private ?string $licencie = null;
 
     public function getId(): ?int
