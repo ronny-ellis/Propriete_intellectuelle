@@ -35,7 +35,7 @@ final class LicenseApiController extends AbstractController{
     #[Route('/api/licenses',methods:['GET'])]
     public function findAll(LicensesRepository $repository){
         $licenses=$repository->findAll();
-
+        // TY le tsy mande
         return $this->json($licenses,200, [
             'groups' => 'licenses.show',
         ]);
