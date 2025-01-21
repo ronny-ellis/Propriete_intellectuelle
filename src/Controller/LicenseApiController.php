@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 
 final class LicenseApiController extends AbstractController
 {
-    #[Route('/api/licenses/{id}', methods: ['POST'])]
+    #[Route('/api/licenses/', methods: ['POST'])]
     public function create(EntityManagerInterface $em, int $id, Request $request): Response
     {
         // Decode JSON request body
