@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 final class UserControllerApiController extends AbstractController{
     #[Route('/api/users', methods:['POST'])]
@@ -28,13 +30,20 @@ final class UserControllerApiController extends AbstractController{
     }
 
     #[Route('/api/users/login', methods:['POST'])]
-    public function login(EntityManagerInterface $em, Request $request, UserRepository $repository){    
+    public function login(EntityManagerInterface $em, Request $request, UserRepository $repository,SerializerInterface $serializer){    
         $data = json_decode($request->getContent(), true);
         
         $user = $repository->findOneBy(['email' => $data['mail']]);
         if(!$user || $user->getMdp() != $data["mdp"]){
             return new JsonResponse(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
         }
+
+        $user = $serializer->deserialize(
+            $request->getContent(),
+            User::class,
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $user,  'groups' => ['user.log']]
+        );
 
         // $em->persist($user);
         // $em->flush();
