@@ -38,13 +38,20 @@ class IpRight
      * @var Collection<int, Deadlines>
      */
     #[ORM\OneToMany(targetEntity: Deadlines::class, mappedBy: 'idIpRight')]
+    #[Groups(['ipRight.show'])]
     private Collection $deadlines;
 
     /**
      * @var Collection<int, Litiges>
      */
     #[ORM\OneToMany(targetEntity: Litiges::class, mappedBy: 'idIpRight')]
+    #[Groups(['ipRight.show'])]
     private Collection $litiges;
+
+    #[ORM\ManyToOne(inversedBy: 'ipRights')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['ipRight.show'])]
+    private ?User $idUser = null;
 
     public function __construct()
     {
@@ -168,6 +175,18 @@ class IpRight
                 $litige->setIdIpRight(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): static
+    {
+        $this->idUser = $idUser;
 
         return $this;
     }

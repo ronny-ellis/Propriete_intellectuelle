@@ -35,9 +35,16 @@ class User
     #[ORM\OneToMany(targetEntity: Licenses::class, mappedBy: 'idUser')]
     private Collection $licenses;
 
+    /**
+     * @var Collection<int, IpRight>
+     */
+    #[ORM\OneToMany(targetEntity: IpRight::class, mappedBy: 'idUser')]
+    private Collection $ipRights;
+
     public function __construct()
     {
         $this->licenses = new ArrayCollection();
+        $this->ipRights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +119,36 @@ class User
             // set the owning side to null (unless already changed)
             if ($license->getIdUser() === $this) {
                 $license->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IpRight>
+     */
+    public function getIpRights(): Collection
+    {
+        return $this->ipRights;
+    }
+
+    public function addIpRight(IpRight $ipRight): static
+    {
+        if (!$this->ipRights->contains($ipRight)) {
+            $this->ipRights->add($ipRight);
+            $ipRight->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIpRight(IpRight $ipRight): static
+    {
+        if ($this->ipRights->removeElement($ipRight)) {
+            // set the owning side to null (unless already changed)
+            if ($ipRight->getIdUser() === $this) {
+                $ipRight->setIdUser(null);
             }
         }
 
