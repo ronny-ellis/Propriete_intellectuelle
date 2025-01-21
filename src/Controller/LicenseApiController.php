@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 final class LicenseApiController extends AbstractController
 {
     #[Route('/api/licenses/', methods: ['POST'])]
-    public function create(EntityManagerInterface $em, int $id, Request $request): Response
+    public function create(EntityManagerInterface $em, Request $request): Response
     {
         // Decode JSON request body
         $data = json_decode($request->getContent(), true);
@@ -26,7 +26,7 @@ final class LicenseApiController extends AbstractController
         }
     
         // Fetch the user by ID
-        $user = $em->getRepository(User::class)->find($id);
+        $user = $em->getRepository(User::class)->find($data['idUser']);
         if (!$user) {
             return $this->json(['error' => 'User not found'], 404);
         }
