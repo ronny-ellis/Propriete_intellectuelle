@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LicensesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LicensesRepository::class)]
 class Licenses
@@ -12,16 +13,20 @@ class Licenses
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['licenses.show'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'licenses')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['licenses.show','licenses.create'])]
     private ?User $idUser = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['licenses.show','licenses.create'])]
     private ?string $territoire = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[Groups(['licenses.show','licenses.create'])]
     private ?string $royalties = null;
 
     public function getId(): ?int

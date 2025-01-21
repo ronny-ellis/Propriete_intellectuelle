@@ -25,7 +25,7 @@ final class UserControllerApiController extends AbstractController{
         ]);
     }
 
-    #[Route('/api/users', methods:'GET')]
+    #[Route('/api/users', methods:['GET'])]
     public function findAll(UserRepository $repository){
         $user=$repository->findAll();
         return $this->json($user,200,[
@@ -33,7 +33,7 @@ final class UserControllerApiController extends AbstractController{
         ]);
     }
 
-    #[Route('/api/users/{id}', methods:'GET', requirements:['id'=>Requirement::DIGITS])]
+    #[Route('/api/users/{id}', methods:['GET'], requirements:['id'=>Requirement::DIGITS])]
     public function findById(User $user){
         return $this->json($user,200,[
             'groups'=>['users.show']
