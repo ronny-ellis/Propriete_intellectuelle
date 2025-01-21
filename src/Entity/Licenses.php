@@ -17,7 +17,7 @@ class Licenses
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class,inversedBy: 'licenses')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'idUser', referencedColumnName: 'id', nullable: false)]
     #[Groups(['licenses.show','licenses.create'])]
     private ?User $idUser = null;
 
