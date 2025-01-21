@@ -13,14 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
 final class LicenseApiController extends AbstractController{
-    #[Route('/api/licenses', methods:['POST'])]
+    #[Route('/api/licenses/{id}', methods:['POST'])]
     public function create(EntityManagerInterface $em,#[MapRequestPayload(serializationContext:[
         'groups'=>['licenses.create']
-        ])] Licenses $licenses){
-
-            $userId = $licenses->getIdUser()->getId();
-            $user = $em->getRepository(User::class)->find($userId);
-
+        ])] Licenses $licenses,int $id){
+            $user = $em->getRepository(User::class)->find($id);
             if (!$user) {
                 return $this->json(['error' => 'User not found'], 404);
             }
@@ -31,6 +28,7 @@ final class LicenseApiController extends AbstractController{
             'groups'=>['licenses.show']
         ]);
     }
+    
     #[Route('/api/licenses',methods:['GET'])]
     public function findAll(LicensesRepository $repository){
         $licenses=$repository->findAll();
