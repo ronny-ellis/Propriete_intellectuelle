@@ -57,11 +57,11 @@ final class LicenseApiController extends AbstractController
         $licenses=$repository->findAll();
         $array = [];
             foreach ($licenses as $license) {
-                $array['id']=$license->getId();
-                $array['user'] = $license->getIdUser()->getNom(); // Example: Access related User's name
-                $array['territoire'] = $license->getTerritoire();
-                $array['royalties'] = $license->getRoyalties();
-                $array['licencie'] = $license->getLicencie();
+                $array[]['id']=$license->getId();
+                $array[]['user'] = $license->getIdUser()->getNom(); // Example: Access related User's name
+                $array[]['territoire'] = $license->getTerritoire();
+                $array[]['royalties'] = $license->getRoyalties();
+                $array[]['licencie'] = $license->getLicencie();
         }
         return $this->json($array,200);
     }
