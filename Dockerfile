@@ -26,8 +26,6 @@ RUN mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx
 # Install dependencies
 #RUN composer install --ignore-platform-reqs
 
-RUN composer require jms/serializer
-
 RUN composer require symfony/serializer
 
 RUN composer require api
