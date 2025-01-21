@@ -20,35 +20,34 @@ final class LicenseApiController extends AbstractController
     {
         // Decode JSON request body
         $data = json_decode($request->getContent(), true);
-
+    
         if (!isset($data['territoire'], $data['royalties'], $data['licencie'])) {
             return $this->json(['error' => 'Invalid input data'], 400);
         }
-
-        // Create new License entity
-        $licenses = new Licenses();
-        $licenses->setTerritoire($data['territoire']);
-        $licenses->setRoyalties($data['royalties']);
-        $licenses->setLicencie($data['licencie']);
-
+    
         // Fetch the user by ID
         $user = $em->getRepository(User::class)->find($id);
         if (!$user) {
             return $this->json(['error' => 'User not found'], 404);
         }
-
-        // Link License with User
+    
+        // Create new License entity
+        $licenses = new Licenses();
+        $licenses->setTerritoire($data['territoire']);
+        $licenses->setRoyalties($data['royalties']);
+        $licenses->setLicencie($data['licencie']);
         $licenses->setIdUser($user);
-
+    
         // Persist and flush the new License
         $em->persist($licenses);
         $em->flush();
-
+    
         // Return the created License
         return $this->json($licenses, 201, [
             'groups' => ['licenses.show'],
         ]);
     }
+    
     
     #[Route('/api/licenses',methods:['GET'])]
     public function findAll(LicensesRepository $repository){
