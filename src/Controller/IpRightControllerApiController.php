@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\IpRight;
 use App\Entity\Task;
+use App\Entity\User;
 use App\Repository\IpRightRepository;
+use App\Repository\UserRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,10 +18,13 @@ use Symfony\Component\Routing\Requirement\Requirement;
 
 final class IpRightControllerApiController extends AbstractController{
     
-    #[Route('api/ip/rights',methods:['POST'])]
+    #[Route('api/ip/rights/{id}',methods:['POST'])]
     public function create(EntityManagerInterface $entityManager,#[MapRequestPayload(serializationContext : [
         'groups' => ['ipRight.create']
-    ])] IpRight $ipRight){
+    ])] IpRight $ipRight,int $id){
+
+        $user= $entityManager->getRepository(User::class)->find($id);
+        $ipRight->setIdUser($user);
         $entityManager->persist($ipRight);
         $entityManager->flush();
         return $this->json($ipRight,200,[

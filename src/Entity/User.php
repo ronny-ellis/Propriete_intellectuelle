@@ -32,12 +32,14 @@ class User
     /**
      * @var Collection<int, Licenses>
      */
+    #[Groups(['users.show','users.create'])]
     #[ORM\OneToMany(targetEntity: Licenses::class, mappedBy: 'idUser')]
     private Collection $licenses;
 
     /**
      * @var Collection<int, IpRight>
      */
+    #[Groups(['users.show','users.create'])]
     #[ORM\OneToMany(targetEntity: IpRight::class, mappedBy: 'idUser')]
     private Collection $ipRights;
 

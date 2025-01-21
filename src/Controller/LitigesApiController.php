@@ -2,17 +2,16 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class LitigesApiController extends AbstractController{
-    #[Route('/litiges/api', name: 'app_litiges_api')]
-    public function index(): JsonResponse
+    #[Route('/api/litiges', name: 'app_litiges_api')]
+    public function create(EntityManagerInterface $em,Request $request)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/LitigesApiController.php',
-        ]);
+        
     }
 }
