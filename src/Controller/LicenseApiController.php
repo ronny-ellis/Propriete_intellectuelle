@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Licenses;
 use App\Entity\User;
 use App\Repository\LicensesRepository;
+use App\DTO\LicensesDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +33,12 @@ final class LicenseApiController extends AbstractController{
     #[Route('/api/licenses',methods:['GET'])]
     public function findAll(LicensesRepository $repository){
         $licenses=$repository->findAll();
-        return $this->json($licenses,200,[
-            'groups'=>['licenses.show']
-        ]);
+
+        $licensesDTO = array_map(function ($license){
+            return new LicensesDTO($license);
+        }, $licenses);
+
+        return $this->json($licensesDTO,200);
     }
     #[Route('/api/licenses/{id}',methods:['GET'],requirements:['id'=>Requirement::DIGITS])]
     public function findById(Licenses $licenses){
