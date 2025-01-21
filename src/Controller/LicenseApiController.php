@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Licenses;
+use App\Entity\User;
 use App\Repository\LicensesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,14 @@ final class LicenseApiController extends AbstractController{
     public function create(EntityManagerInterface $em,#[MapRequestPayload(serializationContext:[
         'groups'=>['licenses.create']
         ])] Licenses $licenses){
+
+            $userId = $licenses->getIdUser()->getId();
+            $user = $em->getRepository(User::class)->find($userId);
+
+            if (!$user) {
+                return $this->json(['error' => 'User not found'], 404);
+            }
+            $licenses->setIdUser($user);
             $em->persist($licenses);
             $em->flush();
         return $this->json($licenses,200,[
